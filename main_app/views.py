@@ -1,8 +1,18 @@
+  
 from django.shortcuts import render
+from django.views.generic import ListView, CreateView, DeleteView
+from .models import Item
 
-# Add the following import
-from django.http import HttpResponse
-
-# Define the home view
+# Create your views here.
 def home(request):
-  return HttpResponse('<h1>Wishlist</h1>')
+    items = Item.objects.all()
+    return render(request, 'home.html', { 'items' : items })
+
+class ItemCreate(CreateView): 
+    model = Item
+    fields = '__all__'
+    success_url = '/'
+
+class ItemDelete(DeleteView): 
+    model = Item
+    success_url = '/'
